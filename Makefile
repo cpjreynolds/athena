@@ -41,4 +41,4 @@ clean:
 
 .PHONY: upload
 upload:
-	minipro -p AT28C256 -uP $(TARGET)
+	minipro -p AT28C256 -uP -w $(TARGET)
