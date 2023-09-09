@@ -1,7 +1,5 @@
-#define ACIA_DATA   (*(unsigned char*) 0x7800)
-#define ACIA_STATUS (*(unsigned char*) 0x7801)
-#define ACIA_CMD    (*(unsigned char*) 0x7802)
-#define ACIA_CTRL   (*(unsigned char*) 0x7803)
+#include "athena.h"
+#include "lcd.h"
 
 void acia_init(void);
 void acia_tx(char);
@@ -12,6 +10,12 @@ int main() {
     acia_tx('a');
     acia_tx('b');
     acia_tx('c');
+
+    lcd_init();
+    lcd_putc('a');
+    lcd_putc('b');
+    lcd_putc('c');
+
     return 0;
 }
 

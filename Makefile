@@ -6,25 +6,33 @@ AS=ca65
 AR=ar65
 LD=ld65
 
-CFLAGS=-t none --cpu 65c02
+CFLAGS=-t none --cpu 65c02 --create-dep $(<:.c=.d)
 ASFLAGS=--cpu 65c02
 LDFLAGS=-C athena.cfg
 
 TARGET=a.out
 
 TARGET_SRC=main.c
-TARGET_OBJ=$(patsubst %.c,%.o,$(TARGET_SRC))
+TARGET_OBJ=$(TARGET_SRC:.c=.o)
 
-PLATFORM_ASM=interrupt.s vectors.s
-PLATFORM_OBJ=$(patsubst %.s,%.o,$(PLATFORM_ASM))
+PLATFORM_ASM=interrupt.s vectors.s lcd.s
+PLATFORM_OBJ=$(PLATFORM_ASM:.s=.o)
 
 LIBC=athena.lib
+
+.PHONY: all clean
+
+all: $(TARGET)
+
+ifneq ($(MAKECMDGOALS),clean)
+-include $(TARGET_SRC:.c=.d)
+endif
 
 $(TARGET): $(PLATFORM_OBJ) $(TARGET_OBJ) $(LIBC)
 	$(LD) $(LDFLAGS) $^
 
 %.o: %.s
-	ca65 $(ASFLAGS) $<
+	$(AS) $(ASFLAGS) $<
 
 %.s: %.c
 	$(CC) $(CFLAGS) $<
@@ -33,11 +41,16 @@ $(LIBC): crt0.o
 	$(AR) a athena.lib crt0.o
 
 crt0.o: crt0.s
-	ca65 crt0.s
+	$(AS) $(ASFLAGS) crt0.s
 
-.PHONY: clean
 clean:
-	rm -f crt0.o $(TARGET) $(PLATFORM_OBJ) $(TARGET_OBJ)
+	rm -f \
+		main.s				\
+		crt0.o				\
+		$(TARGET)			\
+		$(PLATFORM_OBJ) 	\
+		$(TARGET_OBJ) 		\
+		$(TARGET_SRC:.c=.d)
 
 .PHONY: upload
 upload:
