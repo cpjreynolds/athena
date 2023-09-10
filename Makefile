@@ -12,10 +12,10 @@ LDFLAGS=-C athena.cfg
 
 TARGET=a.out
 
-TARGET_SRC=main.c
+TARGET_SRC=main.c lcd.c
 TARGET_OBJ=$(TARGET_SRC:.c=.o)
 
-PLATFORM_ASM=interrupt.s vectors.s lcd.s
+PLATFORM_ASM=interrupt.s vectors.s lcd_s.s
 PLATFORM_OBJ=$(PLATFORM_ASM:.s=.o)
 
 LIBC=athena.lib

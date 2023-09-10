@@ -12,9 +12,7 @@ int main() {
     acia_tx('c');
 
     lcd_init();
-    lcd_putc('a');
-    lcd_putc('b');
-    lcd_putc('c');
+    lcd_puts("merpmerp");
 
     return 0;
 }
