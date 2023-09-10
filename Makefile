@@ -6,7 +6,7 @@ AS=ca65
 AR=ar65
 LD=ld65
 
-CFLAGS=-t none --cpu 65c02 --create-dep $(<:.c=.d)
+CFLAGS=-O -t none --cpu 65c02 --create-dep $(<:.c=.d)
 ASFLAGS=--cpu 65c02
 LDFLAGS=-C athena.cfg
 
