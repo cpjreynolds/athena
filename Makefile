@@ -12,7 +12,7 @@ LDFLAGS=-C athena.cfg
 
 TARGET=a.out
 
-TARGET_SRC=main.c lcd.c
+TARGET_SRC=main.c lcd.c acia.c
 TARGET_OBJ=$(TARGET_SRC:.c=.o)
 
 PLATFORM_ASM=interrupt.s vectors.s lcd_s.s
@@ -46,6 +46,7 @@ crt0.o: crt0.s
 clean:
 	rm -f \
 		main.s				\
+		lcd.s				\
 		crt0.o				\
 		$(TARGET)			\
 		$(PLATFORM_OBJ) 	\
