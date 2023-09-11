@@ -2,10 +2,18 @@
 ;
 ; Interrupt handler
 ;
-;   Checks for BRK and returns from all other interrupts
+;   Stops execution on BRK
+;
+;   Handles ACIA receive on hardware interrupt
 
-.import     _stop
 .export     _irq_int, _nmi_int
+
+.import     _ACIA_RXBUF
+.import     _ACIA_RX_RPTR
+.import     _ACIA_RX_WPTR
+
+.define     ACIA_DATA   $7800
+.define     ACIA_STATUS $7801
 
 .segment    "CODE"
 
@@ -33,8 +41,17 @@ _irq_int:
 
 ; IRQ detected
 irq:
-    pla         ; restore A
-    plx         ; restore X
+    lda ACIA_STATUS
+    and #%10001000      ; test interrupt and Rx bits
+    beq endirq          ; end if bits not set
+    lda ACIA_DATA       ; a = Rx data
+    ldx _ACIA_RX_WPTR   ; x = wptr
+    sta _ACIA_RXBUF,x   ; rxbuf[wptr] = a
+    inc _ACIA_RX_WPTR   ; ++wptr
+
+endirq:
+    pla                 ; restore A
+    plx                 ; restore X
     rti
 
 ; BRK detected

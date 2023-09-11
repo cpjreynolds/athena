@@ -15,7 +15,7 @@ TARGET=a.out
 TARGET_SRC=main.c lcd.c acia.c
 TARGET_OBJ=$(TARGET_SRC:.c=.o)
 
-PLATFORM_ASM=interrupt.s vectors.s lcd_s.s
+PLATFORM_ASM=interrupt.s vectors.s lcd_s.s wait.s
 PLATFORM_OBJ=$(PLATFORM_ASM:.s=.o)
 
 LIBC=athena.lib
@@ -45,8 +45,7 @@ crt0.o: crt0.s
 
 clean:
 	rm -f \
-		main.s				\
-		lcd.s				\
+		$(TARGET_SRC:.c=.s) \
 		crt0.o				\
 		$(TARGET)			\
 		$(PLATFORM_OBJ) 	\
