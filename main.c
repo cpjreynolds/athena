@@ -9,21 +9,17 @@ int main() {
 
     lcd_init();
     acia_init();
-
-    acia_tx('a');
-    acia_tx('b');
-    acia_tx('c');
+    acia_tx('i');
+    acia_tx('n');
+    acia_tx('i');
+    acia_tx('t');
 
     CLI();
 
     while (1) {
         data = acia_rx();
-        acia_tx('r');
-        acia_tx('e');
-        acia_tx('c');
-        acia_tx('v');
-        acia_tx('\n');
         lcd_putc(data);
+        acia_tx(data);
     }
 
     return 0;

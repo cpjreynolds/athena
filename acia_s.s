@@ -40,14 +40,13 @@ condtest:
 ;
 ; Send character as soon as ready
 .proc _acia_tx: near
-
     tax             ; x = a
 waitloop:           ; wait for Tx buffer to empty
     lda ACIA_STATUS
     and #$10        ; Tx register empty?
     beq waitloop    ; loop if !empty
 
-    stx ACIA_DATA   ; Send data
+    stx ACIA_DATA
     rts
 
 .endproc
