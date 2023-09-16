@@ -17,21 +17,22 @@
 
 ; 6502 cpu setup
 _init:
-    ldx #$ff
+    ldx #$ff        ; set the 6502 stack pointer
     txs
-    cld
+    cld             ; disable decimal
 
+    ; set the C stack pointer
     lda #<(__RAM_START__ + __RAM_SIZE__)
     sta sp
     lda #>(__RAM_START__ + __RAM_SIZE__)
     sta sp+1
 
-    jsr zerobss
-    jsr copydata
+    jsr zerobss     ; initialize BSS segment
+    jsr copydata    ; copy variables from ROM to RAM
     jsr initlib
 
-    jsr _main
+    jsr _main       ; jump to entry point
 
 _exit:
     jsr donelib
-    brk
+    brk             ; software interrupt

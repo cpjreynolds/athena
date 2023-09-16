@@ -46,7 +46,6 @@ crt0.o: crt0.s
 clean:
 	rm -f \
 		$(TARGET_SRC:.c=.s) \
-		crt0.o				\
 		$(TARGET)			\
 		$(PLATFORM_OBJ) 	\
 		$(TARGET_OBJ) 		\
