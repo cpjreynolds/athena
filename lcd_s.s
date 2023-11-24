@@ -3,17 +3,13 @@
 ; ======
 ;
 ; LCD hardware routines
+.include "athena.inc"
 
 .PC02
 
 .export _lcd_init
 .export _lcd_cmd
 .export _lcd_putc
-
-.define VIA2_PORTB  $7400
-.define VIA2_PORTA  $7401
-.define VIA2_DDRB   $7402
-.define VIA2_DDRA   $7403
 
 .define LCD_E   %10000000
 .define LCD_RW  %01000000

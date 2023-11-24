@@ -18,6 +18,8 @@ TARGET_OBJ=$(TARGET_SRC:.c=.o)
 PLATFORM_ASM=interrupt.s vectors.s lcd_s.s acia_s.s
 PLATFORM_OBJ=$(PLATFORM_ASM:.s=.o)
 
+ASM_INCLUDE=athena.inc
+
 LIBC=athena.lib
 
 .PHONY: all clean
@@ -31,7 +33,7 @@ endif
 $(TARGET): $(PLATFORM_OBJ) $(TARGET_OBJ) $(LIBC)
 	$(LD) $(LDFLAGS) $^
 
-%.o: %.s
+%.o: %.s $(ASM_INCLUDE)
 	$(AS) $(ASFLAGS) $<
 
 %.s: %.c

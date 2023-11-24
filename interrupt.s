@@ -5,15 +5,13 @@
 ;   Stops execution on BRK
 ;
 ;   Handles ACIA receive on hardware interrupt
+.include    "athena.inc"
 
 .export     _irq_int, _nmi_int
 
 .import     _ACIA_RXBUF
 .import     _ACIA_RX_RPTR
 .import     _ACIA_RX_WPTR
-
-.define     ACIA_DATA   $7800
-.define     ACIA_STATUS $7801
 
 .segment    "CODE"
 

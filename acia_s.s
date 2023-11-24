@@ -1,14 +1,13 @@
 .PC02
 
+.include    "athena.inc"
+
 .import     _ACIA_RXBUF
 .import     _ACIA_RX_RPTR
 .import     _ACIA_RX_WPTR
 
 .export     _acia_rx
 .export     _acia_tx
-
-.define     ACIA_DATA   $7800
-.define     ACIA_STATUS $7801
 
 .segment    "CODE"
 
